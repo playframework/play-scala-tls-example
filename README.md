@@ -31,10 +31,10 @@ and move all of the generated files into the (newly created) `certs` directory:
 
 ```
 cd scripts
-mkdir ../certs
-mv client* ../certs
-mv example* ../certs
-mv password ../certs
+mkdir ../conf/certs
+mv client* ../conf/certs
+mv example* ../conf/certs
+mv password ../conf/certs
 ```
 
 ## Point example.com to localhost

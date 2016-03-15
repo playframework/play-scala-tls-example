@@ -10,17 +10,17 @@ import play.server.api._
 class CustomSSLEngineProvider(appProvider: ApplicationProvider) extends SSLEngineProvider {
 
   def readPassword(): Array[Char] = {
-    val passwordPath = FileSystems.getDefault.getPath("certs", "password")
+    val passwordPath = FileSystems.getDefault.getPath("conf/certs", "password")
     Files.readAllLines(passwordPath).get(0).toCharArray
   }
 
   def readKeyInputStream(): java.io.InputStream = {
-    val keyPath = FileSystems.getDefault.getPath("certs", "example.com.jks")
+    val keyPath = FileSystems.getDefault.getPath("conf/certs", "example.com.jks")
     Files.newInputStream(keyPath)
   }
 
   def readTrustInputStream(): java.io.InputStream = {
-    val keyPath = FileSystems.getDefault.getPath("certs", "clientca.jks")
+    val keyPath = FileSystems.getDefault.getPath("conf/certs", "clientca.jks")
     Files.newInputStream(keyPath)
   }
 
