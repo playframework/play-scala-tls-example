@@ -7,29 +7,29 @@ import org.junit.runner._
 import org.specs2.runner._
 import play.api.Mode
 import play.api.libs.json.{JsValue, Json}
+import play.api.libs.ws.ahc.{AhcWSClient, AhcWSClientConfigFactory}
 import play.api.test._
 
 import scala.concurrent.duration._
 
 @RunWith(classOf[JUnitRunner])
-class HowsMySSLSpec extends PlaySpecification with https.ClientMethods {
+class HowsMySSLSpec extends PlaySpecification {
 
   "WS" should {
 
     "connect to a remote server " in {
-      val input = """play.ws.ssl {
-                    |  //enabledProtocols = [ TLSv1.2 ]
-                    |}
-                  """.stripMargin
-      val config = play.api.Configuration(ConfigFactory.parseString(input).withFallback(ConfigFactory.defaultReference()))
-      val environment = play.api.Environment.simple(new java.io.File("./conf"), Mode.Dev)
 
       val name = "testing"
       val system = ActorSystem(name)
       implicit val materializer = ActorMaterializer(namePrefix = Some(name))(system)
 
-      val client = createClient(config, environment)
-
+      val input = """play.ws.ssl {
+                    |  //enabledProtocols = [ TLSv1.2 ]
+                    |}
+                  """.stripMargin
+      val config = ConfigFactory.parseString(input).withFallback(ConfigFactory.defaultReference())
+      val wsConfig = AhcWSClientConfigFactory.forConfig(config)
+      val client = AhcWSClient(wsConfig)
       val response = await(client.url("https://www.howsmyssl.com/a/check").get())(2 seconds)
       val jsonOutput = response.json
 
