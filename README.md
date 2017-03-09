@@ -1,4 +1,6 @@
-# Example Play TLS Application
+[<img src="https://img.shields.io/travis/playframework/play-scala-tls-example.svg"/>](https://travis-ci.org/playframework/play-scala-tls-example)
+
+# play-scala-tls-example
 
 This application shows how to use Play with SSL/TLS, using the Java Secure Socket Extension (JSSE) API.
  
