@@ -11,8 +11,7 @@ lazy val root = (project in file("."))
   .aggregate(one, two)
   .dependsOn(one, two)
 
-crossScalaVersions := Seq("2.12.7", "2.11.12")
-scalaVersion := crossScalaVersions.value.head
+scalaVersion := "2.12.7"
 
 libraryDependencies += ws
 libraryDependencies += guice
