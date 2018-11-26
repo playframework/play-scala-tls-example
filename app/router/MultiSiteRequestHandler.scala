@@ -1,20 +1,29 @@
 package router
 
 import javax.inject._
-
+import play.api.ApplicationLoader.DevContext
 import play.api.mvc.RequestHeader
 import play.api.http.HttpConfiguration
 import play.api.http.DefaultHttpRequestHandler
 import play.api.http.HttpErrorHandler
 import play.api.http._
+import play.core.{DefaultWebCommands, WebCommands}
 
-class MultiSiteRequestHandler @Inject() (errorHandler: HttpErrorHandler,
+class MultiSiteRequestHandler @Inject() (webCommands: WebCommands,
+                                         optDevContext: Option[DevContext],
+                                         errorHandler: HttpErrorHandler,
                                          configuration: HttpConfiguration,
                                          filters: HttpFilters,
                                          defaultRouter: router.Routes,
                                          oneRouter: one.Routes,
                                          twoRouter: two.Routes)
-  extends DefaultHttpRequestHandler(defaultRouter, errorHandler, configuration, filters) {
+  extends DefaultHttpRequestHandler(
+    webCommands,
+    optDevContext,
+    defaultRouter,
+    errorHandler,
+    configuration,
+    filters.filters) {
 
   override def routeRequest(request: RequestHeader) = {
 
