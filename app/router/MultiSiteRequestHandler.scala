@@ -2,15 +2,16 @@ package router
 
 import javax.inject._
 import play.api.ApplicationLoader.DevContext
+import play.api.OptionalDevContext
 import play.api.mvc.RequestHeader
 import play.api.http.HttpConfiguration
 import play.api.http.DefaultHttpRequestHandler
 import play.api.http.HttpErrorHandler
 import play.api.http._
-import play.core.{DefaultWebCommands, WebCommands}
+import play.core.WebCommands
 
 class MultiSiteRequestHandler @Inject() (webCommands: WebCommands,
-                                         optDevContext: Option[DevContext],
+                                         optDevContext: OptionalDevContext,
                                          errorHandler: HttpErrorHandler,
                                          configuration: HttpConfiguration,
                                          filters: HttpFilters,
@@ -19,7 +20,7 @@ class MultiSiteRequestHandler @Inject() (webCommands: WebCommands,
                                          twoRouter: two.Routes)
   extends DefaultHttpRequestHandler(
     webCommands,
-    optDevContext,
+    optDevContext.devContext,
     defaultRouter,
     errorHandler,
     configuration,
