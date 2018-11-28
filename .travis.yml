@@ -24,7 +24,12 @@ before_cache:
 # Exclude some combinations from build matrix. See:
 # https://docs.travis-ci.com/user/customizing-the-build/#Build-Matrix
 matrix:
+  fast_finish: true
   allow_failures:
+    # Current release of Gradle still does not supports Play 2.7.x releases
+    # As soon as there is a release of Gradle that fixes that, we can then
+    # remove this allowed failure.
+    - env: SCRIPT=scripts/test-gradle
     # We are not fully validating for Java 11 yet, so we allow this to
     # failure until we tackle all the problems. Anyway, having it at the
     # build helps us to track the progress and discover problems sooner.
